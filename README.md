@@ -38,3 +38,4 @@ namespace MyMod
     }
 }
 ```
+This is just the basework, you can head over to the [Example mods](https://github.com/risk-of-thunder/SeikoML/tree/master/ModExample) to see more of how the API works and how you can use it in your own mods!
