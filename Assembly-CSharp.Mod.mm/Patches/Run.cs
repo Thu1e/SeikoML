@@ -7,8 +7,6 @@ namespace RoR2
 {
     internal class patch_Run : Run
     {
-
-        [MonoModPublic]
         public void BuildDropTable()
         {
 			if (ItemDropManager.DefaultDrops) {

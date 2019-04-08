@@ -13,9 +13,6 @@ using UnityEngine.Networking;
 namespace RoR2 {
 	internal class patch_ChestBehavior : ChestBehavior
 	{
-		[MonoModIgnore]
-		private extern void PickFromList(List<PickupIndex> dropList);
-
 		private PickupIndex dropPickup;
 
 		[MonoModPublic]
@@ -25,19 +22,29 @@ namespace RoR2 {
 				return;
 			}
 
-			if (tier1Chance == 0.8f)
+			Debug.Log("T1: " + this.tier1Chance);
+			Debug.Log("T2: " + this.tier2Chance);
+			Debug.Log("T3: " + this.tier3Chance);
+			Debug.Log("Lun: " + this.lunarChance);
+
+			if (lunarChance >= 1f)
 			{
-				this.dropPickup = ItemDropManager.GetSelection(ItemDropLocation.SmallChest,
+				this.dropPickup = ItemDropManager.GetSelection(ItemDropLocation.LunarChest,
 					Run.instance.treasureRng.nextNormalizedFloat);
 			}
-			else if (tier2Chance == 0.8f)
+			else if (tier3Chance >= 0.2f)
+			{
+				this.dropPickup = ItemDropManager.GetSelection(ItemDropLocation.LargeChest,
+					Run.instance.treasureRng.nextNormalizedFloat);
+			}
+			else if (tier2Chance >= 0.8f)
 			{
 				this.dropPickup = ItemDropManager.GetSelection(ItemDropLocation.MediumChest,
 					Run.instance.treasureRng.nextNormalizedFloat);
 			}
-			else
+			else if (tier1Chance <= 0.8f)
 			{
-				this.dropPickup = ItemDropManager.GetSelection(ItemDropLocation.LargeChest,
+				this.dropPickup = ItemDropManager.GetSelection(ItemDropLocation.SmallChest,
 					Run.instance.treasureRng.nextNormalizedFloat);
 			}
 		}

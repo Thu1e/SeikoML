@@ -48,6 +48,8 @@ namespace FunMod {
 				EquipmentIndex.Fruit
 			};
 
+			ItemDropManager.ChestSpawnRate = 5f;
+
 			ItemDropManager.AddDropInformation(ItemDropLocation.SmallChest, t1.ToSelection(0.8f), t2.ToSelection(0.2f), t3.ToSelection(0.03f));
 			ItemDropManager.AddDropInformation(ItemDropLocation.MediumChest, t2.ToSelection(0.8f), t3.ToSelection(0.2f));
 			ItemDropManager.AddDropInformation(ItemDropLocation.LargeChest, t3.ToSelection());

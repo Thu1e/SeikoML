@@ -16,6 +16,7 @@ namespace RoR2
 		{
 			AddDefaultShrineDrops();
 			AddChestDefaultDrops();
+			AddLunarChestDefaultDrops();
 			AddEquipmentChestDefaultDrops();
 			AddBossDefaultDrops();
 		}
@@ -64,6 +65,12 @@ namespace RoR2
 			ItemDropManager.AddDropInformation(ItemDropLocation.EquipmentChest, eq.ToSelection());
 		}
 
+		public static void AddLunarChestDefaultDrops()
+		{
+			var lun = ItemDropManager.GetDefaultLunarDropList();
+			ItemDropManager.AddDropInformation(ItemDropLocation.LunarChest, lun.ToSelection());
+		}
+
 		public static void AddBossDefaultDrops()
 		{
 			ItemDropManager.IncludeSpecialBossDrops = true;
@@ -79,21 +86,40 @@ namespace RoR2
 		//Mobs,
 		Boss,
 		EquipmentChest,
+		LunarChest,
 		SmallChest,
 		MediumChest,
 		LargeChest,
-		Shrine
-		//ItemSelectorT1,
-		//ItemSelectorT2,
-		//ItemSelectorT3
+		Shrine,
+		SmallChestSelector,
+		MediumChestSelector,
+		LargeChestSelector
 	}
 
 	public static class ItemDropManager
 	{
+		public static float ChestSpawnRate = 1.0f;
+		public static bool IncludeSpecialBossDrops = true;
+
+		public static float DefaultChestTier1DropChance = 0.8f;
+		public static float DefaultChestTier2DropChance = 0.2f;
+		public static float DefaultChestTier3DropChance = 0.01f;
+
+		public static float DefaultShrineEquipmentWeight = 2f;
+		public static float DefaultShrineFailureWeight = 10.1f;
+		public static float DefaultShrineTier1Weight = 8f;
+		public static float DefaultShrineTier2Weight = 2f;
+		public static float DefaultShrineTier3Weight = 0.2f;
+
+		public static float DefaultTier1SelectorDropChance = 0.8f;
+		public static float DefaultTier2SelectorDropChance = 0.2f;
+		public static float DefaultTier3SelectorDropChance = 0.01f;
+
 		public static bool DefaultDrops { get; set; } = true;
 
 		public static List<ItemIndex> None { get; set; } = new List<ItemIndex> { ItemIndex.None };
 
+		public static Dictionary<ItemDropLocation, List<PickupSelection>> Selection { get; set; } = new Dictionary<ItemDropLocation, List<PickupSelection>>();
 
 		public static void AddDropInformation(ItemDropLocation dropLocation, params PickupSelection[] pickupSelections)
 		{
@@ -188,8 +214,6 @@ namespace RoR2
 			return list;
 		}
 
-		public static Dictionary<ItemDropLocation, List<PickupSelection>> Selection { get; set; } = new Dictionary<ItemDropLocation, List<PickupSelection>>();
-
 		public static PickupSelection ToSelection(this List<ItemIndex> indices, float dropChance = 1.0f)
 		{
 			if (indices == null)
@@ -217,22 +241,5 @@ namespace RoR2
 				Pickups = indices.Select(x => new PickupIndex(x)).ToList()
 			};
 		}
-
-
-		public static bool IncludeSpecialBossDrops = true;
-
-		public static float DefaultChestTier1DropChance = 0.8f;
-		public static float DefaultChestTier2DropChance = 0.2f;
-		public static float DefaultChestTier3DropChance = 0.01f;
-
-		public static float DefaultShrineEquipmentWeight = 2f;
-		public static float DefaultShrineFailureWeight = 10.1f;
-		public static float DefaultShrineTier1Weight = 8f;
-		public static float DefaultShrineTier2Weight = 2f;
-		public static float DefaultShrineTier3Weight = 0.2f;
-
-		public static float DefaultTier1SelectorDropChance = 0.8f;
-		public static float DefaultTier2SelectorDropChance = 0.2f;
-		public static float DefaultTier3SelectorDropChance = 0.01f;
 	}
 }
